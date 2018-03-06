@@ -1,0 +1,7 @@
+[package]
+name = "pmdk"
+version = "0.1.0"
+authors = ["Ryan Leung <rleungx@gmail.com>"]
+
+[dependencies]
+pmem-sys = { path = "pmem-sys", version = "0.1.0" }
