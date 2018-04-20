@@ -12,4 +12,4 @@ links = "pmem"
 [dependencies]
 
 [build-dependencies]
-bindgen = "0.33.1"
+bindgen = "0.36"
