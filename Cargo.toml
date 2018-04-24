@@ -2,4 +2,5 @@
 members = [
     "pmem-sys",
     "pmemblk-sys",
+    "pmemcto-sys",
 ]
