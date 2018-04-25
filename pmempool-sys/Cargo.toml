@@ -1,0 +1,15 @@
+[package]
+name = "pmempool-sys"
+version = "0.1.0"
+authors = ["Ryan Leung <rleungx@gmail.com>"]
+license = "MIT/Apache-2.0"
+keywords = ["pmempool", "ffi"]
+repository = "https://github.com/rleungx/pmdk-rs"
+homepage = "https://github.com/rleungx/pmdk-rs"
+build = "build.rs"
+links = "pmempool"
+
+[dependencies]
+
+[build-dependencies]
+bindgen = "0.36"

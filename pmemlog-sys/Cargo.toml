@@ -1,0 +1,15 @@
+[package]
+name = "pmemlog-sys"
+version = "0.1.0"
+authors = ["Ryan Leung <rleungx@gmail.com>"]
+license = "MIT/Apache-2.0"
+keywords = ["pmemlog", "ffi"]
+repository = "https://github.com/rleungx/pmdk-rs"
+homepage = "https://github.com/rleungx/pmdk-rs"
+build = "build.rs"
+links = "pmemlog"
+
+[dependencies]
+
+[build-dependencies]
+bindgen = "0.36"
