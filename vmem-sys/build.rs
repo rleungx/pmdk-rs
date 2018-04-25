@@ -8,6 +8,7 @@ fn main() {
 
     let bindings = bindgen::Builder::default()
         .header("wrapper.h")
+        .blacklist_type("max_align_t")
         .generate()
         .expect("Unable to generate bindings");
 
