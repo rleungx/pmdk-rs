@@ -4,11 +4,7 @@ environment:
   matrix:
     - TARGET: x86_64-pc-windows-msvc
       CHANNEL: nightly
-    - TARGET: i686-pc-windows-msvc
-      CHANNEL: nightly
     - TARGET: x86_64-pc-windows-gnu
-      CHANNEL: nightly
-    - TARGET: i686-pc-windows-gnu
       CHANNEL: nightly
 
 install:
@@ -20,7 +16,6 @@ install:
   - choco install -y doxygen.portable
   - appveyor DownloadFile https://github.com/pmem/pmdk/releases/download/%PMDK_VERSION%/pmdk-%PMDK_VERSION%-win-x64-Setup.msi
   - msiexec /i pmdk-%PMDK_VERSION%-win-x64-Setup.msi ACCEPT=YES /qr+
-  - ps: ci\set-pmdk-environment.ps1
 
 build: false
 
