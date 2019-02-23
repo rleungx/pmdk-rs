@@ -7,7 +7,7 @@ fn main() {
     println!("cargo:rustc-link-lib=pmemlog");
 
     let bindings = bindgen::Builder::default()
-        .header("wrapper.h")
+        .header("libpmemlog.h")
         .generate()
         .expect("Unable to generate bindings");
 

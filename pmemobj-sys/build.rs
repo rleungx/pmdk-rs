@@ -7,7 +7,7 @@ fn main() {
     println!("cargo:rustc-link-lib=pmemobj");
 
     let bindings = bindgen::Builder::default()
-        .header("wrapper.h")
+        .header("libpmemobj.h")
         .blacklist_type("max_align_t")
         .generate()
         .expect("Unable to generate bindings");

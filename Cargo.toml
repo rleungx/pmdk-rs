@@ -2,7 +2,6 @@
 members = [
     "pmem-sys",
     "pmemblk-sys",
-    "pmemcto-sys",
     "pmemlog-sys",
     "pmemobj-sys",
     "pmempool-sys",

@@ -7,7 +7,7 @@ fn main() {
     println!("cargo:rustc-link-lib=vmmalloc");
 
     let bindings = bindgen::Builder::default()
-        .header("wrapper.h")
+        .header("libvmmalloc.h")
         .generate()
         .expect("Unable to generate bindings");
 

@@ -7,7 +7,7 @@ fn main() {
     println!("cargo:rustc-link-lib=pmempool");
 
     let bindings = bindgen::Builder::default()
-        .header("wrapper.h")
+        .header("libpmempool.h")
         .blacklist_type("max_align_t")
         .generate()
         .expect("Unable to generate bindings");
