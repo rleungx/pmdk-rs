@@ -44,7 +44,7 @@
 #include <limits.h>
 
 #ifdef _WIN32
-#include <pmemcompat.h>
+#include "pmemcompat.h"
 
 #ifndef PMDK_UTF8_API
 #define pmempool_check_status pmempool_check_statusW

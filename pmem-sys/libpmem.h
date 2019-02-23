@@ -46,7 +46,7 @@
 #include <sys/types.h>
 
 #ifdef _WIN32
-#include <pmemcompat.h>
+#include "pmemcompat.h"
 
 #ifndef PMDK_UTF8_API
 #define pmem_map_file pmem_map_fileW

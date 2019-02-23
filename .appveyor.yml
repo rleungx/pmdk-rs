@@ -1,0 +1,27 @@
+image: Visual Studio 2017
+
+environment:
+  matrix:
+    - TARGET: x86_64-pc-windows-msvc
+      CHANNEL: stable
+    - TARGET: x86_64-pc-windows-msvc
+      CHANNEL: nightly
+
+install:
+  - curl -sSf -o rustup-init.exe https://win.rustup.rs
+  - rustup-init.exe --default-host %TARGET% --default-toolchain %CHANNEL% -y
+  - set PATH=%PATH%;C:\Users\appveyor\.cargo\bin
+  - rustc -vV
+  - cargo -vV
+  - git clone https://github.com/Microsoft/vcpkg
+  - cd vcpkg
+  - .\bootstrap-vcpkg.bat
+  - .\vcpkg integrate install
+  - .\vcpkg install pmdk:x64-windows
+  - cd ..
+
+build: false
+
+test_script:
+  - cargo build --target %TARGET% --verbose --manifest-path pmem-sys/Cargo.toml
+  - cargo test --target %TARGET% --verbose --manifest-path pmem-sys/Cargo.toml

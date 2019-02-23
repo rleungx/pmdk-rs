@@ -2,8 +2,8 @@
 set -ex
 
 doxygen() {
-    version=1.8.14
-    wget ftp://ftp.stack.nl/pub/users/dimitri/doxygen-$version.src.tar.gz -O doxygen-$version.src.tar.gz
+    version=Release_1_8_15
+    wget https://codeload.github.com/doxygen/doxygen/tar.gz/$version -O doxygen-$version.src.tar.gz
     tar -zxvf doxygen-$version.src.tar.gz
     cd doxygen-$version
     mkdir build
