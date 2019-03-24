@@ -1,5 +1,5 @@
 /*
- * Copyright 2014-2018, Intel Corporation
+ * Copyright 2014-2017, Intel Corporation
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -31,25 +31,16 @@
  */
 
 /*
- * libpmemobj.h -- definitions of libpmemobj entry points
- *
- * This library provides support for programming with persistent memory (pmem).
- *
- * libpmemobj provides a pmem-resident transactional object store.
- *
- * See libpmemobj(3) for details.
+ * libpmemobj/pool.h -- definitions of libpmemobj pool macros
  */
 
-#ifndef LIBPMEMOBJ_H
-#define LIBPMEMOBJ_H 1
+#ifndef LIBPMEMOBJ_POOL_H
+#define LIBPMEMOBJ_POOL_H 1
 
-#include "action.h"
-#include "atomic.h"
-#include "ctl.h"
-#include "iterator.h"
-#include "lists_atomic.h"
-#include "pool.h"
-#include "thread.h"
-#include "tx.h"
+#include "pool_base.h"
+#include "types.h"
 
-#endif	/* libpmemobj.h */
+#define POBJ_ROOT(pop, t) (\
+(TOID(t))pmemobj_root((pop), sizeof(t)))
+
+#endif	/* libpmemobj/pool.h */

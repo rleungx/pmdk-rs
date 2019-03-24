@@ -1,5 +1,5 @@
 /*
- * Copyright 2014-2018, Intel Corporation
+ * Copyright 2014-2017, Intel Corporation
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -31,25 +31,44 @@
  */
 
 /*
- * libpmemobj.h -- definitions of libpmemobj entry points
- *
- * This library provides support for programming with persistent memory (pmem).
- *
- * libpmemobj provides a pmem-resident transactional object store.
- *
- * See libpmemobj(3) for details.
+ * libpmemobj/atomic.h -- definitions of libpmemobj atomic macros
  */
 
-#ifndef LIBPMEMOBJ_H
-#define LIBPMEMOBJ_H 1
+#ifndef LIBPMEMOBJ_ATOMIC_H
+#define LIBPMEMOBJ_ATOMIC_H 1
 
-#include "action.h"
-#include "atomic.h"
-#include "ctl.h"
-#include "iterator.h"
-#include "lists_atomic.h"
-#include "pool.h"
-#include "thread.h"
-#include "tx.h"
+#include "atomic_base.h"
+#include "types.h"
 
-#endif	/* libpmemobj.h */
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#define POBJ_NEW(pop, o, t, constr, arg)\
+pmemobj_alloc((pop), (PMEMoid *)(o), sizeof(t), TOID_TYPE_NUM(t),\
+	(constr), (arg))
+
+#define POBJ_ALLOC(pop, o, t, size, constr, arg)\
+pmemobj_alloc((pop), (PMEMoid *)(o), (size), TOID_TYPE_NUM(t),\
+	(constr), (arg))
+
+#define POBJ_ZNEW(pop, o, t)\
+pmemobj_zalloc((pop), (PMEMoid *)(o), sizeof(t), TOID_TYPE_NUM(t))
+
+#define POBJ_ZALLOC(pop, o, t, size)\
+pmemobj_zalloc((pop), (PMEMoid *)(o), (size), TOID_TYPE_NUM(t))
+
+#define POBJ_REALLOC(pop, o, t, size)\
+pmemobj_realloc((pop), (PMEMoid *)(o), (size), TOID_TYPE_NUM(t))
+
+#define POBJ_ZREALLOC(pop, o, t, size)\
+pmemobj_zrealloc((pop), (PMEMoid *)(o), (size), TOID_TYPE_NUM(t))
+
+#define POBJ_FREE(o)\
+pmemobj_free((PMEMoid *)(o))
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif	/* libpmemobj/atomic.h */

@@ -1,16 +1,29 @@
 extern crate bindgen;
+extern crate pmdk_builder;
 
 use std::env;
 use std::path::PathBuf;
 
 fn main() {
+    pmdk_builder::build_lib("libvmmalloc");
+    let out_dir = PathBuf::from(env::var_os("OUT_DIR").unwrap());
+    let lib_path = out_dir.join("build");
+    println!("cargo:rustc-link-search={}", lib_path.as_path().display());
+
+    #[cfg(not(target_os = "windows"))]
     let bindings = bindgen::Builder::default()
         .header("libvmmalloc.h")
         .generate()
         .expect("Unable to generate bindings");
 
-    let out_path = PathBuf::from(env::var("OUT_DIR").unwrap());
+    #[cfg(target_os = "windows")]
+    let bindings = bindgen::Builder::default()
+        .header("libvmmalloc.h")
+        .derive_debug(false)
+        .generate()
+        .expect("Unable to generate bindings");
+
     bindings
-        .write_to_file(out_path.join("bindings.rs"))
-        .expect("Couldn't write pmemcto bindings!");
+        .write_to_file(out_dir.join("bindings.rs"))
+        .expect("Couldn't write pmem bindings!");
 }

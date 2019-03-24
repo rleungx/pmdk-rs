@@ -1,5 +1,5 @@
 /*
- * Copyright 2014-2018, Intel Corporation
+ * Copyright 2017-2018, Intel Corporation
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -31,25 +31,32 @@
  */
 
 /*
- * libpmemobj.h -- definitions of libpmemobj entry points
- *
- * This library provides support for programming with persistent memory (pmem).
- *
- * libpmemobj provides a pmem-resident transactional object store.
- *
- * See libpmemobj(3) for details.
+ * libpmemobj/action.h -- definitions of libpmemobj action interface
  */
 
-#ifndef LIBPMEMOBJ_H
-#define LIBPMEMOBJ_H 1
+#ifndef LIBPMEMOBJ_ACTION_H
+#define LIBPMEMOBJ_ACTION_H 1
 
-#include "action.h"
-#include "atomic.h"
-#include "ctl.h"
-#include "iterator.h"
-#include "lists_atomic.h"
-#include "pool.h"
-#include "thread.h"
-#include "tx.h"
+#include "action_base.h"
 
-#endif	/* libpmemobj.h */
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#define POBJ_RESERVE_NEW(pop, t, act)\
+((TOID(t))pmemobj_reserve(pop, act, sizeof(t), TOID_TYPE_NUM(t)))
+
+#define POBJ_RESERVE_ALLOC(pop, t, size, act)\
+((TOID(t))pmemobj_reserve(pop, act, size, TOID_TYPE_NUM(t)))
+
+#define POBJ_XRESERVE_NEW(pop, t, act, flags)\
+((TOID(t))pmemobj_xreserve(pop, act, sizeof(t), TOID_TYPE_NUM(t), flags))
+
+#define POBJ_XRESERVE_ALLOC(pop, t, size, act, flags)\
+((TOID(t))pmemobj_xreserve(pop, act, size, TOID_TYPE_NUM(t), flags))
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif /* libpmemobj/action_base.h */

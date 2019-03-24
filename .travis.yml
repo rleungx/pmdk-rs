@@ -14,7 +14,8 @@ matrix:
 os:
   - linux
 
-install: ci/install-pmdk.sh
+before_install:
+  - git submodule update --init --recursive
 
 script:
   - cargo build --verbose --all
