@@ -5,25 +5,35 @@ use std::env;
 use std::path::PathBuf;
 
 fn main() {
-    pmdk_builder::build_lib("libvmem");
-    let out_dir = PathBuf::from(env::var_os("OUT_DIR").unwrap());
-    let lib_path = out_dir.join("build");
-    println!("cargo:rustc-link-search={}", lib_path.as_path().display());
-
-    #[cfg(not(target_os = "windows"))]
-    let bindings = bindgen::Builder::default()
-        .header("libvmem.h")
-        .generate()
-        .expect("Unable to generate bindings");
-
-    #[cfg(target_os = "windows")]
-    let bindings = bindgen::Builder::default()
-        .header("libvmem.h")
-        .derive_debug(false)
-        .generate()
-        .expect("Unable to generate bindings");
+    let bindings = generate_bindings();
 
     bindings
-        .write_to_file(out_dir.join("bindings.rs"))
-        .expect("Couldn't write pmem bindings!");
+        .write_to_file(PathBuf::from(env::var_os("OUT_DIR").unwrap()).join("bindings.rs"))
+        .expect("Couldn't write vmem bindings!");
+}
+
+#[cfg(not(target_os = "windows"))]
+fn generate_bindings() -> bindgen::Bindings {
+    pmdk_builder::build_lib("libvmem");
+    let lib_path = PathBuf::from(env::var_os("OUT_DIR").unwrap()).join("build");
+    println!("cargo:rustc-link-search={}", lib_path.as_path().display());
+
+    bindgen::Builder::default()
+        .header("libvmem.h")
+        .blacklist_type("max_align_t")
+        .generate()
+        .expect("Unable to generate bindings")
+}
+
+#[cfg(target_os = "windows")]
+fn generate_bindings() -> bindgen::Bindings {
+    let lib = PathBuf::from(env::var_os("CARGO_MANIFEST_DIR").unwrap())
+        .join("vcpkg/packages/pmdk_x64-windows/lib");
+    println!("cargo:rustc-link-search={}", lib.as_path().display());
+    bindgen::Builder::default()
+        .header("libvmem.h")
+        .blacklist_type("max_align_t")
+        .derive_debug(false)
+        .generate()
+        .expect("Unable to generate bindings")
 }

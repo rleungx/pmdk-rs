@@ -17,6 +17,20 @@ os:
 before_install:
   - git submodule update --init --recursive
 
+install:
+  - sudo apt-get --no-install-recommends install asciidoc xmlto libkmod-dev libudev-dev uuid-dev libjson-c-dev
+  - git clone https://github.com/pmem/ndctl.git
+  - cd ndctl
+  - git checkout tags/v60.1
+  - ./autogen.sh
+  - ./configure
+  - make
+  - sudo make install
+  - sudo cp ndctl/ndctl.h /usr/include/linux
+  - sudo cp config.h /usr/include
+  - sudo cp -r ccan /usr/include
+  - cd ..
+
 script:
   - cargo build --verbose --all
   - cargo test --verbose --all

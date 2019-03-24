@@ -13,10 +13,15 @@ install:
   - set PATH=%PATH%;C:\Users\appveyor\.cargo\bin
   - rustc -vV
   - cargo -vV
+  - git clone https://github.com/Microsoft/vcpkg
+  - cd vcpkg
+  - .\bootstrap-vcpkg.bat
+  - .\vcpkg integrate install
+  - .\vcpkg install pmdk:x64-windows
+  - cd ..
 
-build_script:
-  - git submodule update --init --recursive
+build: false
 
 test_script:
-  - cargo build --target %TARGET% --verbose --manifest-path pmem-sys/Cargo.toml
-  - cargo test --target %TARGET% --verbose --manifest-path pmem-sys/Cargo.toml
+  - cargo build --target %TARGET% --verbose --all
+  - cargo test --target %TARGET% --verbose --all

@@ -12,5 +12,5 @@ links = "pmem"
 [dependencies]
 
 [build-dependencies]
-bindgen = "0.48"
+bindgen = "0.44"
 pmdk-builder = { path = "../pmdk-builder" }
